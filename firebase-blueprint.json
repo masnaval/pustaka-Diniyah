@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "Kitab": {
+      "title": "Kitab",
+      "description": "Metadata for a Diniyah book PDF.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique ID of the kitab" },
+        "judul": { "type": "string", "description": "Title of the book" },
+        "deskripsi": { "type": "string", "description": "Short description" },
+        "kategori": { "type": "string", "description": "Category (e.g., Fiqh, Aqidah)" },
+        "pdf_url": { "type": "string", "description": "URL to the PDF file in Storage" },
+        "uploader_id": { "type": "string", "description": "UID of the user who uploaded" },
+        "uploader_name": { "type": "string", "description": "Name of the uploader" },
+        "timestamp": { "type": "number", "description": "Upload timestamp" }
+      },
+      "required": ["judul", "kategori", "pdf_url", "uploader_id", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/kitab_list/{kitabId}": {
+      "schema": "Kitab",
+      "description": "Collection of all available kitab PDFs."
+    }
+  }
+}
