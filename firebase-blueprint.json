@@ -1,26 +1,83 @@
 {
   "entities": {
-    "Kitab": {
-      "title": "Kitab",
-      "description": "Metadata for a Diniyah book PDF.",
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Guru/admin account profile.",
       "type": "object",
       "properties": {
-        "id": { "type": "string", "description": "Unique ID of the kitab" },
-        "judul": { "type": "string", "description": "Title of the book" },
-        "deskripsi": { "type": "string", "description": "Short description" },
-        "kategori": { "type": "string", "description": "Category (e.g., Fiqh, Aqidah)" },
-        "pdf_url": { "type": "string", "description": "URL to the PDF file in Storage" },
-        "uploader_id": { "type": "string", "description": "UID of the user who uploaded" },
-        "uploader_name": { "type": "string", "description": "Name of the uploader" },
-        "timestamp": { "type": "number", "description": "Upload timestamp" }
+        "uid": { "type": "string" },
+        "nama": { "type": "string" },
+        "nip": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["guru", "admin"] },
+        "photoURL": { "type": "string" }
       },
-      "required": ["judul", "kategori", "pdf_url", "uploader_id", "timestamp"]
+      "required": ["uid", "nama", "nip", "email", "role"]
+    },
+    "Soal": {
+      "title": "Soal",
+      "description": "Exam question with Pegon/Arabic RTL support.",
+      "type": "object",
+      "properties": {
+        "kelas": { "type": "string" },
+        "mata_pelajaran": { "type": "string" },
+        "kategori": { "type": "string", "enum": ["pg", "essai"] },
+        "nomor_soal": { "type": "number" },
+        "teks_soal": { "type": "string" },
+        "file_url": { "type": "string" },
+        "pembuat_id": { "type": "string" },
+        "created_at": { "type": "object" }
+      },
+      "required": ["kelas", "mata_pelajaran", "kategori", "teks_soal", "pembuat_id"]
+    },
+    "Siswa": {
+      "title": "Siswa",
+      "description": "Student record.",
+      "type": "object",
+      "properties": {
+        "nama": { "type": "string" },
+        "nis": { "type": "string" },
+        "kelas": { "type": "string" },
+        "status": { "type": "string", "enum": ["aktif", "lulus", "keluar"] }
+      },
+      "required": ["nama", "nis", "kelas", "status"]
+    },
+    "Nilai": {
+      "title": "Nilai",
+      "description": "Student grade record.",
+      "type": "object",
+      "properties": {
+        "siswa_id": { "type": "string" },
+        "siswa_nama": { "type": "string" },
+        "kelas": { "type": "string" },
+        "mata_pelajaran": { "type": "string" },
+        "nilai": { "type": "number" },
+        "guru_id": { "type": "string" },
+        "created_at": { "type": "object" }
+      },
+      "required": ["siswa_id", "kelas", "mata_pelajaran", "nilai", "guru_id"]
+    },
+    "Jadwal": {
+      "title": "Jadwal",
+      "description": "Teacher's teaching schedule.",
+      "type": "object",
+      "properties": {
+        "hari": { "type": "string" },
+        "jam_mulai": { "type": "string" },
+        "jam_selesai": { "type": "string" },
+        "mata_pelajaran": { "type": "string" },
+        "kelas": { "type": "string" },
+        "ruang": { "type": "string" },
+        "guru_id": { "type": "string" }
+      },
+      "required": ["hari", "jam_mulai", "jam_selesai", "mata_pelajaran", "kelas", "guru_id"]
     }
   },
   "firestore": {
-    "/kitab_list/{kitabId}": {
-      "schema": "Kitab",
-      "description": "Collection of all available kitab PDFs."
-    }
+    "/users/{uid}": { "schema": "UserProfile", "description": "Teacher/admin profiles." },
+    "/soal/{soalId}": { "schema": "Soal", "description": "Exam questions." },
+    "/siswa/{siswaId}": { "schema": "Siswa", "description": "Student records." },
+    "/nilai/{nilaiId}": { "schema": "Nilai", "description": "Grade records." },
+    "/jadwal/{jadwalId}": { "schema": "Jadwal", "description": "Teaching schedules." }
   }
 }
