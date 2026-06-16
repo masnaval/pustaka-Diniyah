@@ -6,6 +6,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  updatePassword,
   signOut,
   onAuthStateChanged,
   User
@@ -41,6 +42,7 @@ export {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  updatePassword,
   signOut,
   onAuthStateChanged,
   collection,

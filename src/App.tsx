@@ -9,7 +9,7 @@ import * as XLSX from 'xlsx';
 import {
   auth, db, googleProvider,
   signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword,
-  sendPasswordResetEmail, signOut, onAuthStateChanged,
+  sendPasswordResetEmail, updatePassword, signOut, onAuthStateChanged,
   collection, addDoc, getDocs, getDoc, onSnapshot,
   doc, deleteDoc, updateDoc, setDoc, where, query, orderBy, Timestamp, writeBatch,
   User
@@ -1533,7 +1533,6 @@ const ChangePasswordModal = ({ onClose }: { onClose: () => void }) => {
     if (newPass.length < 6) { setError('Minimal 6 karakter.'); return; }
     setLoading(true); setError('');
     try {
-      const { updatePassword } = await import('firebase/auth');
       await updatePassword(auth.currentUser!, newPass);
       setSuccess(true);
       setTimeout(onClose, 1500);
